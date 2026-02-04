@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РАСПИСАНИЕ ЭП-13</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calendar-alt"></i> Расписание уроков</h1>
+            <p><h2>Последнее изменение: <p>04 февраля 2026г.</p></h2></p>
+            <p>-----------------------------------------------------------</p>
+            <p class="subtitle">Расписание занятий и звонков на учебную неделю. Выберите день недели для просмотра расписания. В случае если расписание будет изменено, то изменения на сайте будут</p>
+        </header>
+        
+        <div class="week-days">
+            <div class="day-tab active" data-day="monday">Понедельник</div>
+            <div class="day-tab" data-day="tuesday">Вторник</div>
+            <div class="day-tab" data-day="wednesday">Среда</div>
+            <div class="day-tab" data-day="thursday">Четверг ❗</div>
+            <div class="day-tab" data-day="friday">Пятница</div>
+        </div>
+        
+        <div class="schedule-container">
+            <h2 class="day-title"><i class="fas fa-calendar-day"></i> <span id="current-day">Понедельник</span></h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Время</th>
+                        <th>Предмет</th>
+                        <th>Кабинет</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule-body">
+                    <!-- Расписание будет заполняться через JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="breaks-info">
+                <h3 class="breaks-title"><i class="fas fa-clock"></i> Перемены</h3>
+                <div class="breaks-list" id="breaks-list">
+                    <!-- Информация о переменах будет заполняться через JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Расписание уроков | Актуально!</p>
+            <p class="current-time" id="current-time"></p>
+        </footer>
+    </div>
+
+    <script>
+        // Расписание звонков (одинаковое для всех дней)
+        const bellSchedule = [
+            { lesson: 0, start: "8:00", end: "8:45" },
+            { lesson: 1, start: "8:55", end: "9:40" },
+            { lesson: 2, start: "9:50", end: "10:35" },
+            { lesson: 3, start: "10:45", end: "11:30" },
+            { lesson: 4, start: "11:40", end: "12:25" },
+            { lesson: 5, start: "12:25", end: "13:30" },
+            { lesson: 6, start: "13:40", end: "14:25" },
+            { lesson: 7, start: "14:35", end: "15:20" },
+            { lesson: 8, start: "15:30", end: "16:15" },
+            { lesson: 9, start: "16:25", end: "17:00" }
+        ];
+
+        // РАСПИСАНИЕ ПЕРЕМЕН (укажите продолжительность в минутах)
+        const breakSchedule = {
+            monday: [
+                { afterLesson: 0, duration: 10 },
+                { afterLesson: 1, duration: 10 },
+                { afterLesson: 2, duration: 10 },
+                { afterLesson: 3, duration: 10 },
+                { afterLesson: 4, duration: 10 },
+                { afterLesson: 5, duration: 20 }, // Обед
+                { afterLesson: 6, duration: 10 },
+                { afterLesson: 7, duration: 10 }
+            ],
+            tuesday: [
+                { afterLesson: 0, duration: 10 },
+                { afterLesson: 1, duration: 10 },
+                { afterLesson: 2, duration: 10 },
+                { afterLesson: 3, duration: 10 },
+                { afterLesson: 4, duration: 20 },
+                { afterLesson: 5, duration: 10 }, // Обед
+                { afterLesson: 6, duration: 10 },
+                { afterLesson: 7, duration: 10 }
+                
+            ],
+            wednesday: [
+                { afterLesson: 0, duration: 10 },
+                { afterLesson: 1, duration: 10 },
+                { afterLesson: 2, duration: 10 },
+                { afterLesson: 3, duration: 10 },
+                { afterLesson: 4, duration: 20 },
+                { afterLesson: 5, duration: 10 }, // Обед
+                { afterLesson: 6, duration: 10 },
+                { afterLesson: 7, duration: 10 }
+            ],
+            thursday: [
+                { afterLesson: 0, duration: 10 },
+                { afterLesson: 1, duration: 10 },
+                { afterLesson: 2, duration: 10 },
+                { afterLesson: 3, duration: 10 },
+                { afterLesson: 4, duration: 20 }, // Обед
+                { afterLesson: 5, duration: 10 },
+                { afterLesson: 6, duration: 10 }, 
+                { afterLesson: 7, duration: 10 }
+            ],
+            friday: [
+                { afterLesson: 0, duration: 10 },
+                { afterLesson: 1, duration: 10 },
+                { afterLesson: 2, duration: 10 },
+                { afterLesson: 3, duration: 10 },
+                { afterLesson: 4, duration: 20 }, // Обед
+                { afterLesson: 5, duration: 10 },
+                { afterLesson: 6, duration: 10 },
+                { afterLesson: 7, duration: 10 }
+            ]
+        };
+
+        // Расписание уроков по дням недели
+        const schedule = {
+            monday: [
+                { lesson: 1, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
+                { lesson: 2, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
+                { lesson: 3, subject: "Белорусский язык", teacher: "Татьяна Николаевна", room: "36" },
+                { lesson: 4, subject: "Обществоведение", teacher: "Наталья Петровна", room: "11" },
+                { lesson: 5, subject: "ОБЕД", teacher: "", room: "" },
+                { lesson: 6, subject: "Русский язык", teacher: "Елена Алексеевна", room: "43" },
+                { lesson: 7, subject: "Биология", teacher: "Галина Леонидовна", room: "46" },
+                { lesson: 8, subject: "Русская литература", teacher: "Елена Алексеевна", room: "43" }
+            ],
+            tuesday: [
+                { lesson: 1, subject: "География", teacher: "Галина Леонидовна", room: "46" },
+                { lesson: 2, subject: "География", teacher: "Галина Леонидовна", room: "46" },
+                { lesson: 3, subject: "История", teacher: "Валерия Михайловна", room: "12" },
+                { lesson: 4, subject: "Физкультура", teacher: "Сергей Владимирович", room: "С/З" },
+                { lesson: 5, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
+                { lesson: 6, subject: "ОБЕД", teacher: "", room: "" }
+            ],
+            wednesday: [
+                { lesson: 1, subject: "Белорусская литература", teacher: "Татьяна Николаевна", room: "36" },
+                { lesson: 2, subject: "Белорусская литература", teacher: "Татьяна Николаевна", room: "36" },
+                { lesson: 3, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
+                { lesson: 4, subject: "Английский язык", teacher: "", room: "48 / 37" },
+                { lesson: 5, subject: "Английский язык", teacher: "", room: "48 / 37" },
+                { lesson: 6, subject: "ОБЕД", teacher: "", room: "" },
+                { lesson: 7, subject: "История", teacher: "Валерия Михайловна", room: "12" },
+                { lesson: 8, subject: "Русская литература", teacher: "Елена Алексеевна", room: "43" }
+            ],
+            thursday: [
+                { lesson: 1, subject: "Физкультура", teacher: "Сергей Владимирович", room: "С/З" },
+                { lesson: 2, subject: "Физкультура", teacher: "Сергей Владимирович", room: "С/З" },
+                { lesson: 3, subject: "Черчение", teacher: "Татьяна Владимировна", room: "24" },
+                { lesson: 4, subject: "Черчение", teacher: "Татьяна Владимировна", room: "24" },
+                { lesson: 5, subject: "ОБЕД", teacher: "", room: "" },
+                { lesson: 6, subject: "Информа/ПриклЧерч", teacher: "", room: "31 / 33" },
+                { lesson: 7, subject: "Информа/ПриклЧерч", teacher: "", room: "31 / 33" },
+               // { lesson: 8, subject: "Математика", teacher: "Елена Генадьевна", room: "34" } 
+            ],
+            friday: [
+                { lesson: 1, subject: "ПриклЧерч/Информа", teacher: "", room: "33 / 31" },
+                { lesson: 2, subject: "ПриклЧерч/Информа", teacher: "", room: "33 / 31" },
+                { lesson: 3, subject: "Химия", teacher: "Ирина Михайловна", room: "35" },
+                { lesson: 4, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
+                { lesson: 5, subject: "ОБЕД", teacher: "", room: "" },
+                { lesson: 6, subject: "Черчение", teacher: "Татьяна Владимировна", room: "24" },
+                { lesson: 7, subject: "Черчение", teacher: "Татьяна Владимировна", room: "24" },
+                { lesson: 8, subject: "История", teacher: "Валерия Михайловна", room: "12" }
+            ]
+        };
+
+        // Названия дней недели для отображения
+        const dayNames = {
+            monday: "Понедельник",
+            tuesday: "Вторник",
+            wednesday: "Среда",
+            thursday: "Четверг ❗Измененно❗",
+            friday: "Пятница"
+        };
+
+        // Текущий день недели (для инициализации)
+        let currentDay = "monday";
+
+        // Функция для отображения расписания на выбранный день
+        function renderSchedule(day) {
+            // Обновляем заголовок
+            document.getElementById("current-day").textContent = dayNames[day];
+            
+            // Получаем контейнер для расписания
+            const scheduleBody = document.getElementById("schedule-body");
+            scheduleBody.innerHTML = "";
+            
+            // Получаем уроки для выбранного дня
+            const daySchedule = schedule[day];
+            
+            // Заполняем таблицу уроками
+            daySchedule.forEach(item => {
+                const bell = bellSchedule.find(b => b.lesson === item.lesson);
+                
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td class="lesson-number">${item.lesson}</td>
+                    <td class="lesson-time">${bell.start} - ${bell.end}</td>
+                    <td>
+                        <div class="lesson-name">${item.subject}</div>
+                        <div class="lesson-teacher">${item.teacher}</div>
+                    </td>
+                    <td class="lesson-room">${item.room}</td>
+                `;
+                scheduleBody.appendChild(row);
+            });
+            
+            // Отображаем информацию о переменах
+            renderBreaks(day);
+        }
+
+        // Функция для отображения информации о переменах
+        function renderBreaks(day) {
+            const breaksList = document.getElementById("breaks-list");
+            breaksList.innerHTML = "";
+            
+            // Получаем расписание перемен для выбранного дня
+            const dayBreaks = breakSchedule[day];
+            
+            // Отображаем каждую перемену
+            dayBreaks.forEach(breakItem => {
+                const breakElement = document.createElement("div");
+                breakElement.className = "break-item";
+                breakElement.innerHTML = `
+                    <span>После ${breakItem.afterLesson} урока</span>
+                    <span class="break-duration">${breakItem.duration} мин</span>
+                `;
+                breaksList.appendChild(breakElement);
+            });
+            
+            // Добавляем информацию о времени начала и окончания занятий
+            const daySchedule = schedule[day];
+            const firstLesson = daySchedule[0];
+            const lastLesson = daySchedule[daySchedule.length - 1];
+            
+            const firstBell = bellSchedule.find(b => b.lesson === firstLesson.lesson);
+            const lastBell = bellSchedule.find(b => b.lesson === lastLesson.lesson);
+            
+            const totalLessons = document.createElement("div");
+            totalLessons.className = "break-item";
+            totalLessons.innerHTML = `
+                <span>Всего уроков: ${daySchedule.length}</span>
+                <span class="break-duration">${firstBell.start} - ${lastBell.end}</span>
+            `;
+            breaksList.appendChild(totalLessons);
+        }
+
+        // Функция для обновления текущего времени
+        function updateCurrentTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const timeString = now.toLocaleDateString('ru-RU', options);
+            document.getElementById("current-time").textContent = timeString;
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener("DOMContentLoaded", function() {
+            // Отображаем расписание на понедельник
+            renderSchedule(currentDay);
+            
+            // Обновляем текущее время
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            
+            // Добавляем обработчики событий для вкладок дней недели
+            const dayTabs = document.querySelectorAll(".day-tab");
+            dayTabs.forEach(tab => {
+                tab.addEventListener("click", function() {
+                    // Убираем активный класс со всех вкладок
+                    dayTabs.forEach(t => t.classList.remove("active"));
+                    
+                    // Добавляем активный класс к текущей вкладке
+                    this.classList.add("active");
+                    
+                    // Получаем выбранный день
+                    const selectedDay = this.getAttribute("data-day");
+                    
+                    // Отображаем расписание для выбранного дня
+                    renderSchedule(selectedDay);
+                });
+            });
+            
+            // Автоматически выбираем текущий день недели (если это рабочий день)
+            const today = new Date().getDay(); // 0 - воскресенье, 1 - понедельник, ...
+            const dayMap = { 1: "monday", 2: "tuesday", 3: "wednesday", 4: "thursday", 5: "friday" };
+            
+            if (dayMap[today]) {
+                // Убираем активный класс со всех вкладок
+                dayTabs.forEach(t => t.classList.remove("active"));
+                
+                // Добавляем активный класс к текущей вкладке
+                document.querySelector(`.day-tab[data-day="${dayMap[today]}"]`).classList.add("active");
+                
+                // Отображаем расписание для текущего дня
+                renderSchedule(dayMap[today]);
+            }
+        });
+    </script>
+</body>
+</html>
