@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>РАСПИСАНИЕ ЭП-13</title>
+    <link rel="icon" href="images/ЛОГО ЭП-13.png" type="logo13">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 
@@ -12,13 +13,13 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-calendar-alt"></i> Расписание уроков</h1>
-            <p><h2>Последнее изменение: <p>06.02.2026 | 17:00</p></h2></p>
+            <p><h2>Последнее изменение: <p>10.02.2026 | 20:00</p></h2></p>
             <p>----------------------------------</p>
             <p class="subtitle">Расписание занятий и звонков на учебную неделю. Выберите день недели для просмотра расписания. В случае если расписание будет изменено, то изменения на сайте будут</p>
         </header>
         
         <div class="week-days">
-            <div class="day-tab active" data-day="monday">Понедельник ❗</div>
+            <div class="day-tab active" data-day="monday">Понедельник</div>
             <div class="day-tab" data-day="tuesday">Вторник</div>
             <div class="day-tab" data-day="wednesday">Среда</div>
             <div class="day-tab" data-day="thursday">Четверг</div>
@@ -109,8 +110,8 @@
                 { afterLesson: 1, duration: 10 },
                 { afterLesson: 2, duration: 10 },
                 { afterLesson: 3, duration: 10 },
-                { afterLesson: 4, duration: 20 }, // Обед
-                { afterLesson: 5, duration: 10 },
+                { afterLesson: 4, duration: 20 }, 
+                { afterLesson: 5, duration: 10 }, // Обед
                 { afterLesson: 6, duration: 10 }, 
                 { afterLesson: 7, duration: 10 }
             ],
@@ -129,58 +130,58 @@
         // Расписание уроков по дням недели
         const schedule = {
             monday: [
-                { lesson: 1, subject: "Русский язык", teacher: "Елена Алексеевна", room: "43" },
-                { lesson: 2, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
-                { lesson: 3, subject: "Белорусский язык", teacher: "Татьяна Николаевна", room: "36" },
-                { lesson: 4, subject: "Обществоведение", teacher: "Наталья Петровна", room: "11" },
-                { lesson: 5, subject: "Белорусская литература", teacher: "Татьяна Николаевна", room: "36" },
+                { lesson: 1, subject: "Русский язык", teacher: "Гришечкина Е.А.", room: "43" },
+                { lesson: 2, subject: "Математика", teacher: "Тимченко Е.Г.", room: "34" },
+                { lesson: 3, subject: "Белорусский язык", teacher: "Антошевская Т.Н.", room: "36" },
+                { lesson: 4, subject: "Обществоведение", teacher: "Бернадская Н.П.", room: "11" },
+                { lesson: 5, subject: "Белорусская литература", teacher: "Антошевская Т.Н.", room: "36" },
                 { lesson: 6, subject: "ОБЕД", teacher: "", room: "" },
-                { lesson: 7, subject: "Физкультура", teacher: "Сергей Владимирович", room: "С/З" },
-                { lesson: 8, subject: "Охрана Труда", teacher: "Сергей Георгиевич", room: "44" }
+                { lesson: 7, subject: "Физкультура", teacher: "Мохорев С.В.", room: "С/З" },
+                { lesson: 8, subject: "Охрана Труда", teacher: "Коноплицкий С.Г.", room: "44" }
             ],
             tuesday: [
-                { lesson: 1, subject: "География", teacher: "Галина Леонидовна", room: "46" },
-                { lesson: 2, subject: "География", teacher: "Галина Леонидовна", room: "46" },
-                { lesson: 3, subject: "История", teacher: "Валерия Михайловна", room: "12" },
-                { lesson: 4, subject: "Физкультура", teacher: "Сергей Владимирович", room: "С/З" },
-                { lesson: 5, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
-                { lesson: 6, subject: "ОБЕД", teacher: "", room: "" }
+                { lesson: 1, subject: "Материаловедение", teacher: "Качура Л.В.", room: "45" },
+                { lesson: 2, subject: "Материаловедение", teacher: "Качура Л.В.", room: "45" },
+                { lesson: 3, subject: "Физкультура", teacher: "Мохорев С.В.", room: "С/З" },
+                { lesson: 4, subject: "Физкультура", teacher: "Мохорев С.В.", room: "С/З" },
+                { lesson: 5, subject: "Математика", teacher: "Тимченко Е.Г.", room: "34" },
+                { lesson: 6, subject: "ОБЕД", teacher: "", room: "" },
+                { lesson: 7, subject: "География", teacher: "Кушнерова Г.Л.", room: "46" },
+                { lesson: 8, subject: "История", teacher: "Тукач В.М.", room: "12" }
             ],
             wednesday: [
-                { lesson: 1, subject: "Белорусская литература", teacher: "Татьяна Николаевна", room: "36" },
-                { lesson: 2, subject: "Белорусская литература", teacher: "Татьяна Николаевна", room: "36" },
-                { lesson: 3, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
-                { lesson: 4, subject: "Английский язык", teacher: "", room: "48 / 37" },
-                { lesson: 5, subject: "Английский язык", teacher: "", room: "48 / 37" },
+                { lesson: 1, subject: "История", teacher: "Тукач В.М.", room: "12" },
+                { lesson: 2, subject: "Английский язык", teacher: "Сторинская К.А. / Бондаренко А.П.", room: "48 / 37" },
+                { lesson: 3, subject: "Черчение", teacher: "Крюкова Т.В.", room: "24" },
+                { lesson: 4, subject: "Черчение", teacher: "Крюкова Т.В.", room: "24" },
+                { lesson: 5, subject: "Русская литература", teacher: "Гришечкина Е.А.", room: "43" },
                 { lesson: 6, subject: "ОБЕД", teacher: "", room: "" },
-                { lesson: 7, subject: "История", teacher: "Валерия Михайловна", room: "12" },
-                { lesson: 8, subject: "Русская литература", teacher: "Елена Алексеевна", room: "43" }
+                { lesson: 7, subject: "Специальная технология", teacher: "Качура Л.В.", room: "45" },
+                { lesson: 8, subject: "Специальная технология", teacher: "Качура Л.В.", room: "45" }
             ],
             thursday: [
-                { lesson: 1, subject: "Физкультура", teacher: "Сергей Владимирович", room: "С/З" },
-                { lesson: 2, subject: "Физкультура", teacher: "Сергей Владимирович", room: "С/З" },
-                { lesson: 3, subject: "Черчение", teacher: "Татьяна Владимировна", room: "24" },
-                { lesson: 4, subject: "Черчение", teacher: "Татьяна Владимировна", room: "24" },
-                { lesson: 5, subject: "ОБЕД", teacher: "", room: "" },
-                { lesson: 6, subject: "Информа/ПриклЧерч", teacher: "", room: "31 / 33" },
-                { lesson: 7, subject: "Информа/ПриклЧерч", teacher: "", room: "31 / 33" },
-                { lesson: 8, subject: "Математика", teacher: "Елена Генадьевна", room: "34" } 
+                { lesson: 1, subject: "Математика", teacher: "Тимченко Е.Г.", room: "34" },
+                { lesson: 2, subject: "Английский язык", teacher: "Сторинская К.А. / Бондаренко А.П.", room: "48 / 37" },
+                { lesson: 3, subject: "Физика", teacher: "Авдейчик Л.В.", room: "23" },
+                { lesson: 4, subject: "Биология", teacher: "Кушнерова Г.Л.", room: "46" },
+                { lesson: 5, subject: "Химия", teacher: "Михедова И.М.", room: "35" },
+                { lesson: 6, subject: "ОБЕД", teacher: "", room: "" },
+                { lesson: 7, subject: "Информа/ПриклЧерч", teacher: "Власов А.Г. / Кулакова С.В.", room: "31 / 33" },
+                { lesson: 8, subject: "Информа/ПриклЧерч", teacher: "Власов А.Г. / Кулакова С.В.", room: "31 / 33" }
             ],
             friday: [
-                { lesson: 1, subject: "ПриклЧерч/Информа", teacher: "", room: "33 / 31" },
-                { lesson: 2, subject: "ПриклЧерч/Информа", teacher: "", room: "33 / 31" },
-                { lesson: 3, subject: "Химия", teacher: "Ирина Михайловна", room: "35" },
-                { lesson: 4, subject: "Математика", teacher: "Елена Генадьевна", room: "34" },
+                { lesson: 1, subject: "ПриклЧерч/Информа", teacher: "Кулакова С.В. / Власов А.Г.", room: "33 / 31" },
+                { lesson: 2, subject: "ПриклЧерч/Информа", teacher: "Кулакова С.В. / Власов А.Г.", room: "33 / 31" },
+                { lesson: 3, subject: "Математика", teacher: "Тимченко Е.Г.", room: "34" },
+                { lesson: 4, subject: "Математика", teacher: "Тимченко Е.Г.", room: "34" },
                 { lesson: 5, subject: "ОБЕД", teacher: "", room: "" },
-                { lesson: 6, subject: "Черчение", teacher: "Татьяна Владимировна", room: "24" },
-                { lesson: 7, subject: "Черчение", teacher: "Татьяна Владимировна", room: "24" },
-                { lesson: 8, subject: "История", teacher: "Валерия Михайловна", room: "12" }
+                { lesson: 6, subject: "Охрана Труда", teacher: "Коноплицкий С.Г.", room: "44" }
             ]
         };
 
         // Названия дней недели для отображения
         const dayNames = {
-            monday: "Понедельник ❗",
+            monday: "Понедел.",
             tuesday: "Вторник",
             wednesday: "Среда",
             thursday: "Четверг",
